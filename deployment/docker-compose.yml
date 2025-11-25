@@ -1,0 +1,26 @@
+services:
+  quarkus-rest-server:
+    image: test/quarkus-rest-server:0.0.1-SNAPSHOT
+    container_name: quarkus-rest-server
+    ports:
+    - 8081:8080
+    - 9002:9000
+    expose:
+    - 8082
+    - 9002
+    environment:
+      QUARKUS_OTEL_SDK_DISABLED: 'true'
+  quarkus-rest-client:
+    image: test/quarkus-rest-client:0.0.1-SNAPSHOT
+    container_name: quarkus-rest-client
+    depends_on:
+    - server
+    ports:
+    - 8080:8080
+    - 9000:9000
+    expose:
+    - 8080
+    - 9000
+    environment:
+      QUARKUS_OTEL_SDK_DISABLED: 'true'
+      QUARKUS_REST_CLIENT_TEST_SERVER_URL: 'http://quarkus-rest-server:8081'
