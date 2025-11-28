@@ -1,0 +1,6 @@
+grafana-data
+loki-data
+loki-storage
+p8s-storage
+shared
+tempo-data
