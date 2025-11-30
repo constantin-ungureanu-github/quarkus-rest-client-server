@@ -1,6 +1,7 @@
 package org.client.app;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.CoreMatchers.is;
 import java.io.File;
 import jakarta.ws.rs.core.MediaType;
 import io.quarkus.test.common.QuarkusTestResource;
@@ -24,6 +25,7 @@ class ResourceTest {
             .when()
                 .post("/test")
             .then()
-                .statusCode(200);
+                .statusCode(200)
+                .body(is("OK"));
     }
 }

@@ -28,8 +28,6 @@ public class Resource {
     @Counted
     @Timed
     public Response test(@NotNull File file) {
-        final String response = testService.test(file);
-
-        return Response.ok(response).build();
+        return Response.ok(testService.test(file)).build();
     }
 }

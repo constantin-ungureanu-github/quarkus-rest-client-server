@@ -6,7 +6,6 @@ import jakarta.inject.Inject;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.client.helper.ServerResource;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -17,7 +16,6 @@ class ServiceTest {
     Service service;
 
     private static final String INPUT_FILE = "src/test/resources/zip_2MB.zip";
-    private static final String INPUT_SMALL_FILE = "src/test/resources/file_example_ODS_5000.ods";
 
     @Test
     void testService() {
@@ -25,16 +23,6 @@ class ServiceTest {
 
         final String result = service.test(inputFile);
 
-        assertEquals("ok", result);
-    }
-
-    @Disabled
-    @Test
-    void testServiceSmall() {
-        final File inputFile = new File(INPUT_SMALL_FILE);
-
-        final String result = service.test(inputFile);
-
-        assertEquals("ok", result);
+        assertEquals("OK", result);
     }
 }

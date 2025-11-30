@@ -16,5 +16,5 @@ public class TestUtils {
             httpClient(HttpClientConfig.httpClientConfig()
                     .setParam("http.connection.timeout", HTTP_CLIENT_TIMEOUT)           // Connection timeout
                     .setParam("http.connection-manager.timeout", HTTP_CLIENT_TIMEOUT)   // Connection request timeout
-                    .setParam("http.socket.timeout", HTTP_CLIENT_READ_TIMEOUT));        // Read timeout
+                    .setParam("http.socket.timeout", HTTP_CLIENT_READ_TIMEOUT));        // The time waiting for data
 }
