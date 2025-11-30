@@ -5,6 +5,7 @@ import java.io.File;
 import jakarta.ws.rs.core.MediaType;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.Test;
+import org.server.helper.TestUtils;
 
 @QuarkusTest
 class ResourceTest {
@@ -14,7 +15,7 @@ class ResourceTest {
     @Test
     void testRest() {
         final File inputFile = new File(INPUT_FILE);
-        given()
+        given().config(TestUtils.config)
             .header("Content-Type", MediaType.APPLICATION_OCTET_STREAM)
             .body(inputFile)
             .when()

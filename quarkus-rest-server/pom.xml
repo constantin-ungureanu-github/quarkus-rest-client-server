@@ -92,4 +92,14 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>native</id>
+            <properties>
+                <quarkus.docker.dockerfile-native-path>src/main/docker/Dockerfile.jvm</quarkus.docker.dockerfile-native-path>
+                <quarkus.podman.dockerfile-native-path>src/main/docker/Dockerfile.jvm</quarkus.podman.dockerfile-native-path>
+            </properties>
+        </profile>
+    </profiles>
+
 </project>

@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.stream.IntStream;
 import jakarta.inject.Singleton;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.server.client.ServerApi;
 import org.server.client.ServerApi.MultipartResponse;
@@ -19,8 +20,11 @@ public class Service {
     @RestClient
     private ServerApi testApi;
 
+    @ConfigProperty(name = "iteration.number", defaultValue = "1000")
+    private Integer iterationNumber;
+
     public String test(final File file) {
-        IntStream.range(0, 1000)
+        IntStream.range(0, iterationNumber)
 //            .parallel()
             .forEach(i -> {
             try {
@@ -29,7 +33,7 @@ public class Service {
                 if (multipartResponse != null && multipartResponse.getFile() != null) {
                     Files.delete(multipartResponse.getFile().toPath());
                 }
-                log.info("Processed file {}", i);
+                log.info("Processed file {} # {}", file.getName(), i);
             } catch (IOException e) {
                 log.error("IO exception: {}", e.getMessage(), e);
             } catch (RuntimeException e) {

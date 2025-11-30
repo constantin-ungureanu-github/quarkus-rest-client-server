@@ -6,6 +6,7 @@ import jakarta.ws.rs.core.MediaType;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import org.client.helper.ServerResource;
+import org.client.helper.TestUtils;
 import org.junit.jupiter.api.Test;
 
 @QuarkusTest
@@ -17,7 +18,7 @@ class ResourceTest {
     @Test
     void testRest() {
         final File inputFile = new File(INPUT_FILE);
-        given()
+        given().config(TestUtils.config)
             .header("Content-Type", MediaType.APPLICATION_OCTET_STREAM)
             .body(inputFile)
             .when()

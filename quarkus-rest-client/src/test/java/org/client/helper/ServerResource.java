@@ -10,7 +10,6 @@ import io.quarkus.test.common.DevServicesContext;
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.Network;
-import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.containers.wait.strategy.WaitAllStrategy;
 import org.testcontainers.utility.DockerImageName;
@@ -41,7 +40,7 @@ public class ServerResource implements QuarkusTestResourceLifecycleManager, DevS
 
             testServer.withNetworkMode(network)
                     .withExposedPorts(TEST_SERVER_PORT)
-                    .withLogConsumer(new Slf4jLogConsumer(log).withSeparateOutputStreams())
+//                    .withLogConsumer(new Slf4jLogConsumer(log).withSeparateOutputStreams())
                     .waitingFor(new WaitAllStrategy(WITH_MAXIMUM_OUTER_TIMEOUT)
                             .withStartupTimeout(Duration.ofSeconds(120))
                             .withStrategy(Wait.forLogMessage(".*Profile prod activated.*\\n", 1)))
@@ -53,7 +52,7 @@ public class ServerResource implements QuarkusTestResourceLifecycleManager, DevS
             testServer.withNetwork(network)
                     .withNetworkAliases("test")
                     .withExposedPorts(TEST_SERVER_PORT)
-                    .withLogConsumer(new Slf4jLogConsumer(log).withSeparateOutputStreams())
+//                    .withLogConsumer(new Slf4jLogConsumer(log).withSeparateOutputStreams())
                     .waitingFor(new WaitAllStrategy(WITH_MAXIMUM_OUTER_TIMEOUT)
                             .withStartupTimeout(Duration.ofSeconds(120))
                             .withStrategy(Wait.forLogMessage(".*Profile prod activated.*\\n", 1)))

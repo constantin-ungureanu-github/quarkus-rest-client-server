@@ -4,8 +4,16 @@
 ## Build
 
 ```shell
+mvn clean install
+```
+
+
+## Build Native
+
+```shell
 mvn clean install -Pnative
 ```
+
 
 
 ## Run
@@ -14,6 +22,7 @@ mvn clean install -Pnative
 cd deployment
 docker compose up
 ```
+
 
 
 ## (Optional) Verify versions

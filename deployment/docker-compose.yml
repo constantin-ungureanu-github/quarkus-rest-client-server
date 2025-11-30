@@ -7,10 +7,9 @@ services:
     - 3000:3000
     - 4317:4317
     - 4318:4318
+    - 9090:9090
     expose:
     - 3000
-    - 4317
-    - 4318
     volumes:
     - ./tempo-data:/data/tempo
     - ./grafana-data:/data/grafana
@@ -24,10 +23,10 @@ services:
     container_name: quarkus-rest-server
     ports:
     - 8081:8080
-    - 9001:9000
+    - 9003:9000
     expose:
     - 8081
-    - 9001
+    - 9003
     environment:
       QUARKUS_OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://lgtm:4318
@@ -38,22 +37,24 @@ services:
       QUARKUS_OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: cumulative
       QUARKUS_OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       QUARKUS_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://lgtm:4318
-    networks:
-    - network
     depends_on:
       lgtm:
         condition: service_started
+    networks:
+    - network
   quarkus-rest-client:
     image: test/quarkus-rest-client:0.0.1-SNAPSHOT
     container_name: quarkus-rest-client
     ports:
+    - 5005:5005
     - 8080:8080
-    - 9000:9000
+    - 9002:9000
     expose:
+    - 5005
     - 8080
-    - 9000
+    - 9002
     environment:
-      QUARKUS_REST_CLIENT_TEST_SERVER_URL: 'http://localhost:8081'
+      QUARKUS_REST_CLIENT_TEST_SERVER_URL: http://localhost:8081/test
       QUARKUS_OTEL_EXPORTER_OTLP_PROTOCOL: http/protobuf
       QUARKUS_OTEL_EXPORTER_OTLP_ENDPOINT: http://lgtm:4318
       QUARKUS_OTEL_EXPORTER_OTLP_LOGS_PROTOCOL: http/protobuf
@@ -63,13 +64,13 @@ services:
       QUARKUS_OTEL_EXPORTER_OTLP_METRICS_TEMPORALITY_PREFERENCE: cumulative
       QUARKUS_OTEL_EXPORTER_OTLP_TRACES_PROTOCOL: http/protobuf
       QUARKUS_OTEL_EXPORTER_OTLP_TRACES_ENDPOINT: http://lgtm:4318
-    networks:
-    - network
     depends_on:
       lgtm:
         condition: service_started
       quarkus-rest-server:
         condition: service_started
+    networks:
+    - network
 networks:
   network:
     driver: bridge
