@@ -2,6 +2,7 @@ package org.server.app;
 
 import java.io.File;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -26,7 +27,7 @@ public class Resource {
     public DownloadFormData test(File file) {
         log.info("Received file {}", file.getName());
         return DownloadFormData.builder()
-                .fileName("output_file")
+                .fileName(file.getName())
                 .file(file)
                 .build();
     }
@@ -38,11 +39,11 @@ public class Resource {
     @Jacksonized
     @JsonIgnoreProperties(ignoreUnknown = true)
     private static class DownloadFormData {
-        @RestForm("fileName")
+        @FormParam("fileName")
         @PartType(MediaType.TEXT_PLAIN)
         String fileName;
 
-        @RestForm("file")
+        @RestForm
         @PartType(MediaType.APPLICATION_OCTET_STREAM)
         File file;
     }

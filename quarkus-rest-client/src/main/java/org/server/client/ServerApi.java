@@ -2,6 +2,7 @@ package org.server.client;
 
 import java.io.File;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.FormParam;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -14,7 +15,6 @@ import org.jboss.resteasy.reactive.RestForm;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Generated;
 import lombok.NoArgsConstructor;
 import lombok.extern.jackson.Jacksonized;
 
@@ -22,9 +22,8 @@ import lombok.extern.jackson.Jacksonized;
  * Test rest client.
  */
 @Path("/test")
-@RegisterRestClient(configKey = "test-server")
+@RegisterRestClient(configKey = "api-server")
 @RegisterClientHeaders
-@Generated
 public interface ServerApi {
 
     @POST
@@ -39,10 +38,11 @@ public interface ServerApi {
 	@Jacksonized
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	class MultipartResponse {
-        @RestForm("fileName")
+	    @FormParam("fileName")
+        @PartType(MediaType.TEXT_PLAIN)
         String fileName;
 
-		@RestForm("file")
+		@RestForm
 		@PartType(MediaType.APPLICATION_OCTET_STREAM)
 		File file;
 	}

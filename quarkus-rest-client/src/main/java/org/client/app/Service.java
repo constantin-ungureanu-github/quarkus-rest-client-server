@@ -24,7 +24,7 @@ public class Service {
 
     public String test(final File file) {
 //        IntStream.range(0, iterationNumber)
-////            .parallel()
+//            .parallel()
 //            .forEach(i -> {
 //            try {
 //                final MultipartResponse multipartResponse = testApi.test(file);
@@ -44,10 +44,17 @@ public class Service {
             for (int i = 0; i < iterationNumber; i++) {
                 final MultipartResponse multipartResponse = testApi.test(file);
 
-                if (multipartResponse != null && multipartResponse.getFile() != null) {
-                    Files.delete(multipartResponse.getFile().toPath());
+                String fileName = "unknown";
+                if (multipartResponse != null) {
+                    if (multipartResponse.getFile() != null) {
+                        Files.delete(multipartResponse.getFile().toPath());
+                    }
+
+                    if (multipartResponse.getFileName() != null) {
+                        fileName = multipartResponse.getFileName();
+                    }
                 }
-                log.info("Processed file {} # {}", file.getName(), i);
+                log.info("Processed file {} # {}", fileName, i);
             }
         } catch (IOException e) {
             log.error("IO exception: {}", e.getMessage(), e);
